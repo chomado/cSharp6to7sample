@@ -43,8 +43,7 @@ namespace CSharp6to7sample
         {
             await Task.Delay(3000);
 
-            int i;
-            if (!int.TryParse(input, out i))
+            if (!int.TryParse(input, out var i))
             {
                 return (null, new ArgumentException());
             }
