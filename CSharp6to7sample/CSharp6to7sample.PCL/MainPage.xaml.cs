@@ -20,20 +20,20 @@ namespace CSharp6to7sample
             var loader = new Loader();
 
             var result = await loader.LoadAsync(this.entryInput.Text);
-            if (result.Error is ArgumentException)
+            if (result.error is ArgumentException)
             {
                 this.labelOutput.Text = "入力値が不正です";
                 return;
             }
 
-            var ex = result.Error as WebException;
+            var ex = result.error as WebException;
             if (ex != null)
             {
                 this.labelOutput.Text = $"Error: {ex.Status}";
                 return;
             }
 
-            labelOutput.Text = result.Text;
+            labelOutput.Text = result.text;
         }
 	}
 
@@ -46,21 +46,21 @@ namespace CSharp6to7sample
             int i;
             if (!int.TryParse(input, out i))
             {
-                return new ResultData { Error = new ArgumentException() };
+                return new ResultData { error = new ArgumentException() };
             }
 
             if (i < 0)
             {
-                return new ResultData { Error = new WebException("error", WebExceptionStatus.ConnectFailure) };
+                return new ResultData { error = new WebException("error", WebExceptionStatus.ConnectFailure) };
             }
 
-            return new ResultData { Text = DateTime.Now.ToString() };
+            return new ResultData { text = DateTime.Now.ToString() };
         }
     }
 
     public class ResultData
     {
-        public string Text { get; set; }
-        public Exception Error { get; set; }
+        public string text { get; set; }
+        public Exception error { get; set; }
     }
 }
