@@ -20,20 +20,19 @@ namespace CSharp6to7sample
             var loader = new Loader();
 
             var result = await loader.LoadAsync(this.entryInput.Text);
-            if (result.error is ArgumentException)
+            switch (result.error)
             {
-                this.labelOutput.Text = "入力値が不正です";
-                return;
-            }
+                case ArgumentException _:
+                    this.labelOutput.Text = "入力値が不正です";
+                    break;
+                case WebException ex:
+                    this.labelOutput.Text = $"Error: {ex.Status}";
+                    break;
+                default:
+                    labelOutput.Text = result.text;
+                    break;
 
-            var ex = result.error as WebException;
-            if (ex != null)
-            {
-                this.labelOutput.Text = $"Error: {ex.Status}";
-                return;
             }
-
-            labelOutput.Text = result.text;
         }
 	}
 
