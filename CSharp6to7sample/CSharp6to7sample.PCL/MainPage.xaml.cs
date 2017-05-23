@@ -39,28 +39,23 @@ namespace CSharp6to7sample
 
     public class Loader
     {
-        public async Task<ResultData> LoadAsync(string input)
+        public async Task<(string text, Exception error)> LoadAsync(string input)
         {
             await Task.Delay(3000);
 
             int i;
             if (!int.TryParse(input, out i))
             {
-                return new ResultData { error = new ArgumentException() };
+                return (null, new ArgumentException());
             }
 
             if (i < 0)
             {
-                return new ResultData { error = new WebException("error", WebExceptionStatus.ConnectFailure) };
+                return (null, new WebException("error", WebExceptionStatus.ConnectFailure));
             }
 
-            return new ResultData { text = DateTime.Now.ToString() };
+            return (DateTime.Now.ToString(), null);
         }
     }
 
-    public class ResultData
-    {
-        public string text { get; set; }
-        public Exception error { get; set; }
-    }
 }
